@@ -10,16 +10,18 @@ public class MovieGame {
         guessingTheMovie(selectedMovie);
 
     }//Storing movies in an array.
-    private static  String[] movieArray(){
-        File file = new File("movies.txt");
+    // Recommendation: Just use a List<String> return type; it's more common practice and easier to work with down the line
+    private static  String[] movieArray(){  // This method name could be misleading; maybe call it "getMovieNamesFromFile()"?
+        File file = new File("movies.txt");  // Perhaps the file name should be an input to the method
         Scanner inp = null;
         try{
              inp = new Scanner(file);
         }
         catch(FileNotFoundException e){
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage());  // Idea: print out a simple message for the user to read
 
         }finally {
+            // Wouldn't this break if the file doesn't exist?
             ArrayList<String> moviesFromFile = readMoviesFromFile(inp);//Create a readMovies method and read movies.
             String[] movieNames = moviesFromFile.toArray(new String[0]);//Copy the movie names in an array.
         return movieNames;
@@ -27,7 +29,7 @@ public class MovieGame {
 
     }
 //Read movies from the file method.
-    private static ArrayList<String> readMoviesFromFile(Scanner inp) {
+    private static ArrayList<String> readMoviesFromFile(Scanner inp) {  // Good separation of concerns
         ArrayList<String> movies = new ArrayList<String>();
         while (inp.hasNextLine()){
             movies.add(inp.nextLine());
@@ -42,7 +44,8 @@ public class MovieGame {
         return movieTitles[selectedMovieIndex];
     }
     //Guessing the movie and changing it to underscore.
-    private static void guessingTheMovie(String selectedMovie){
+    // I'd call this method "guessMovie()"
+    private static void guessingTheMovie(String selectedMovie){  // Can the logic within the method be separated into smaller functions?
         int numOfWrongGuesses = 0;
         int flag = 0;
         String maskedTitle = selectedMovie.replaceAll(".", "_");
